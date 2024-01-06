@@ -27,7 +27,7 @@ public class FileSplit {
                csvWriter.writeAll(list);
            }
 
-       }catch(IOException e){
+       }catch(Exception e){
            e.printStackTrace();
 
        }
