@@ -1,6 +1,7 @@
 package com.bootcoding.reader;
 
 import com.bootcoding.model.BankTransaction;
+import com.bootcoding.utils.split.DateUtils;
 import com.opencsv.CSVReader;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,10 +26,16 @@ public class TransactionFileReader {
     }
 
     private List<BankTransaction> convert(List<String[]> data){
-        return data.stream().map(row -> buildTransaction(row)).collect(Collectors.toList());
+        return data.stream().map(row -> {
+            try {
+                return buildTransaction(row);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.toList());
     }
 
-    private BankTransaction buildTransaction(String[] row) {
+    private BankTransaction buildTransaction(String[] row) throws Exception {
 
         return BankTransaction.builder()
                 .transactionId(row[0])
